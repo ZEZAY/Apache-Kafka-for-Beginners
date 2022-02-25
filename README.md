@@ -1,5 +1,66 @@
 # Apache Kafka for Beginners
 
+[Youtube Tutorial](https://www.youtube.com/watch?v=CU44hKLMg7khttps://www.youtube.com/watch?v=CU44hKLMg7k)
+
+Apache Kafka is `distributed publish-subscribe` messaging system.
+
+```txt
+Producer -> Broker -> Consumer
+```
+
+Producer
+
+- write msg to partition (in Topic)
+
+Consumer
+
+- read msg to partition (in Topic)
+- 2 ways: waiting for new, from beginning
+
+Kafka Broker
+
+- receive msg from producer
+- `store msg`
+- give ability for consumers to read msg
+- 1 broker can have many topics
+
+Topic
+
+- have specific name
+- default duration: 7 days
+- `queue` structure (msg)
+- can be in many brokers at the same time
+- part of a topic (in a broker) called `partition`
+
+Partition
+
+- 1 partition has 2+ nodes (2 types): leader & follower
+- leader: handle partition read/write operation
+- if leader fails, one of followers be come leader
+- have many nodes to back up msg
+
+Message (structure)
+
+- timestamp
+- offset number (unique across partition)
+- key (optional)
+- value (sequence of bytes)
+
+```txt
+Broker <-> Zookeeper
+```
+
+Zookeeper
+
+- maintains list of active brokers
+- manage config of topics and partitions
+- elects controller
+
+Zookeeper Cluster (ensemble)
+
+- many zookeepers
+- recommended to have `odd` number of zookeepers in an ensemble
+
 ## Installation
 
 - [Apache Kafka](https://kafka.apache.org/downloads) (Binary)
@@ -61,6 +122,8 @@ $ tar -xvzf ~/Downloads/kafka.tgz --strip 1
 ```
 
 ## Zookeeper and Broker
+
+Kafka Broker can have multiple clusters
 
 1 Kafka cluster = 1 Zookeeper + 1 Broker
 
