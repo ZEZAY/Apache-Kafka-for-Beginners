@@ -60,16 +60,52 @@ $ cd kafka
 $ tar -xvzf ~/Downloads/kafka.tgz --strip 1
 ```
 
-## Starting Kafka's Zookeeper and Broker
+## Zookeeper and Broker
+
+1 Kafka cluster = 1 Zookeeper + 1 Broker
 
 Run Zookeeper
 
 ```bash
+# default -> localhost:2181
 $ bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
 
-Run Server (keep Zookeeper running)
+Run Server/Broker (keep Zookeeper running)
 
 ```bash
+# default -> localhost:9092
 $ bin/kafka-server-start.sh config/server.properties
+```
+
+## Topic
+
+```bash
+# create, delete, describe, or change a topic
+$ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic <TOPIC_NAME>
+```
+
+```bash
+# list topics belong to a zookeeper
+$ bin/kafka-topics.sh --list --zookeeper localhost:2181
+
+# get a topic detail
+$ bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic <TOPIC_NAME>
+```
+
+## Producer and Consumer
+
+in 1 Kafka cluster can have multiple Producers and Consumers
+
+```bash
+# start sending messages to a topic
+$ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <TOPIC_NAME>
+```
+
+```bash
+# start receiving messages from a topic
+$ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <TOPIC_NAME>
+
+# start receiving (and also show the earlier messages)
+$ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <TOPIC_NAME> --from-beginning
 ```
